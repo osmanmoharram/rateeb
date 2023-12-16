@@ -53,8 +53,8 @@ class UserResource extends Resource
                 name: 'manager',
                 titleAttribute: 'name',
                 modifyQueryUsing: fn (Builder $query) => $query
-                    ->whereRelation('job', 'title', '=', 'مدير النظام')
-                    ->orWhereRelation('job', 'title', '=', 'مدير')
+                    ->whereRelation('job', 'title', '=', 'المدير الهندسي')
+                    ->orWhereRelation('job', 'title', '=', 'رئيس قسم المكتب الفني لخدمات المياه')
             )
             ->label('المدير المباشر'),
 

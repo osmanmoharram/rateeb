@@ -9,5 +9,5 @@ class Operation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'type'];
+    protected $fillable = ['number', 'name', 'type'];
 }

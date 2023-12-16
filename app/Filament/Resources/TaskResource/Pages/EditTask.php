@@ -80,7 +80,15 @@ class EditTask extends EditRecord
                     ])
                     ->visible(fn (?Model $record) => $record?->assigner?->id === auth()->user()->id),
 
-                Select::make('status')
+                Grid::make(2)->schema([
+                    DatePicker::make('delivery_date')
+                        ->label('تاريخ التسليم')
+                        ->date()
+                        ->after('start_date')
+                ]),
+
+                Grid::make(2)->schema([
+                    Select::make('status')
                     ->label('الحالة')
                     ->options([
                         'أنشأت' => 'أنشأت',
@@ -90,10 +98,7 @@ class EditTask extends EditRecord
                         'معلقة' => 'معلقة',
                         'ملغية' => 'ملغية'
                     ]),
-                DatePicker::make('delivery_date')
-                    ->label('تاريخ التسليم')
-                    ->date()
-                    ->after('start_date')
+                ]),
             ]);
     }
 }

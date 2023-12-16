@@ -6,6 +6,7 @@ use App\Filament\Resources\OperationResource\Pages;
 use App\Filament\Resources\OperationResource\RelationManagers;
 use App\Models\Operation;
 use Filament\Forms;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -14,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OperationResource extends Resource
@@ -30,21 +32,29 @@ class OperationResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->required()
-                    ->string()
-                    ->minValue(3)
-                    ->label('الإسم'),
+                Grid::make(3)->schema([
+                    TextInput::make('number')
+                        ->required()
+                        ->string()
+                        // ->unique(Operation::class, 'number', fn (?Model $record) => $record?->number, 'number')
+                        ->label('الرقم'),
 
-                Select::make('type')
-                    ->options([
-                        'outgoing' => 'صادرة',
-                        'incoming' => 'واردة'
-                    ])
-                    ->default('incoming')
-                    ->required()
-                    ->in(['incoming', 'outgoing'])
-                    ->label('النوع')
+                    TextInput::make('name')
+                        ->required()
+                        ->string()
+                        ->minValue(3)
+                        ->label('الإسم'),
+
+                    Select::make('type')
+                        ->options([
+                            'outgoing' => 'صادرة',
+                            'incoming' => 'واردة'
+                        ])
+                        ->default('incoming')
+                        ->required()
+                        ->in(['incoming', 'outgoing'])
+                        ->label('النوع')
+                ])
             ]);
     }
 
@@ -52,6 +62,7 @@ class OperationResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('number')->label('الرقم'),
                 TextColumn::make('name')->label('الإسم'),
                 TextColumn::make('type')->label('النوع')
             ])

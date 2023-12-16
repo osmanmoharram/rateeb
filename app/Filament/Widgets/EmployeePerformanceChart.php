@@ -20,7 +20,7 @@ class EmployeePerformanceChart extends ApexChartWidget
      *
      * @var string|null
      */
-    protected static ?string $heading = 'أعداد المهام لكل موظف مصنفة حسب تسليمها قبل، في أو بعد الوقت المحدد لها';
+    protected static ?string $heading = 'أعداد المهام لكل موظف مصنفة حسب تسليمها قبل، في أو بعد تاريخ النهاية المحدد لها';
 
     protected int | string | array $columnSpan = 'full'; 
 
@@ -52,15 +52,15 @@ class EmployeePerformanceChart extends ApexChartWidget
             ],
             'series' => [
                 [
-                    'name' => 'المهام المسلمة قبل وقتها',
+                    'name' => 'قبل تاريخ النهاية',
                     'data' => $early
                 ],
                 [
-                    'name' => 'المهام المسلمة في وقتها',
+                    'name' => 'في تاريخ النهاية',
                     'data' => $onTime
                 ],
                 [
-                    'name' => 'المهام المسلمة بعد وقتها',
+                    'name' => 'بعد تاريخ النهاية',
                     'data' => $late
                 ],
             ],
