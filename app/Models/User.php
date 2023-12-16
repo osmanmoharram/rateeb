@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'manager_id');
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'assignee_id');
+    }
 }

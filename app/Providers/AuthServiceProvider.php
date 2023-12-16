@@ -25,6 +25,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+        Gate::before(fn ($user) => true);
     }
 }

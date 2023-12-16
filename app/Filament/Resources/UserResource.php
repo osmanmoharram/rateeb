@@ -52,7 +52,9 @@ class UserResource extends Resource
             Select::make('manager_id')->relationship(
                 name: 'manager',
                 titleAttribute: 'name',
-                modifyQueryUsing: fn (Builder $query) => $query->whereRelation('job', 'title', '=', 'مدير ')
+                modifyQueryUsing: fn (Builder $query) => $query
+                    ->whereRelation('job', 'title', '=', 'مدير النظام')
+                    ->orWhereRelation('job', 'title', '=', 'مدير')
             )
             ->label('المدير المباشر'),
 
@@ -100,9 +102,11 @@ class UserResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query
-                ->whereBelongsTo(auth()->user(), 'manager')
-                ->orWhereIn('manager_id', User::whereBelongsTo(auth()->user(), 'manager')->select('id')->get()->all())
+            ->modifyQueryUsing(fn ($query) => $query
+                ->when(auth()->user()->job_id !== null, fn ($query) => $query
+                    ->whereBelongsTo(auth()->user(), 'manager')
+                    ->orWhereIn('manager_id', User::whereBelongsTo(auth()->user(), 'manager')->get('id')->all())
+                )
             );
     }
 
@@ -112,6 +116,17 @@ class UserResource extends Resource
             //
         ];
     }
+
+    /**
+     * @return array<class-string<Widget>>
+     */
+    public static function getWidgets(): array
+    {
+        return [
+            \App\Filament\Widgets\EmployeePerformanceChart::class
+        ];
+    }
+
 
     public static function getPages(): array
     {

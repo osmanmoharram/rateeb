@@ -22,7 +22,7 @@ class ListTasks extends ListRecords
 
     public function getTabs(): array
     {
-        if (auth()->user()->job->title == 'موظف') {
+        if (auth()->user()->job?->title == 'موظف') {
             return [];
         }
         
